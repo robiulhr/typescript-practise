@@ -756,8 +756,133 @@ type ReadonlyAlternative = {
   readonly age: 23;
 };
 
+// -------------------------------- Generic in typescript
+
+function printData(data: number) {
+  console.log("data: ", data);
+}
+
+printData(2);
+
+// let's suppose you want to make printData a more generic function,
+// where you can pass any type of argument to it like:
+// number/ string/ boolean.
+// So, you might think to follow an approach like below:
+
+function printData1(data: number | string | boolean) {
+  console.log("data: ", data);
+}
+
+printData(2);
+printData("hello");
+printData(true);
+
+// But in the future, you might want to print an array of numbers using the same function.
+// In that case the types will increase and it will become cumbersome to maintain all those different types.
+// This is when Generics come into the picture.
+
+function printDataGeneric<T>(data: T) {
+  console.log("data: ", data);
+}
+
+printDataGeneric(2);
+printDataGeneric("hello");
+printDataGeneric(true);
+
+// Even if you pass an array of numbers or an object to the printData function, everything will be displayed properly without TS complaining:
+
+printDataGeneric([1, 2, 3, 4, 5, 6]);
+printDataGeneric([1, 2, 3, "hi"]);
+printDataGeneric({ name: "Ram", rollNo: 1 });
+
+// -------- another example
+
+function printDataGeneric2<X, Y>(data1: X, data2: Y) {
+  console.log("Output is: ", data1, data2);
+}
+
+printDataGeneric2("Hello", "World");
+printDataGeneric2(123, ["Hi", 123]);
+
+// ------------------------------------ Use Generics with Interfaces
+
+interface UserData<X, Y> {
+  name: X;
+  rollNo: Y;
+}
+
+const user: UserData<string, number> = {
+  name: "Ram",
+  rollNo: 1,
+};
+
+// ----- example
+
+interface PersonWithGeneric<T, U> {
+  firstname: T;
+  age: U;
+}
+
+function introducePerson<T, U>(firstname: T, age: U): void {
+  console.log("Hey! My name is " + firstname + ",and I am " + age);
+}
+
+let firstPerson: PersonWithGeneric<string, number> = {
+  firstname: "robiul",
+  age: 23,
+};
+
+introducePerson<string, number>(firstPerson.firstname, firstPerson.age); // Output: Hey! My name is Amara, and I am 12
+
+// --------------------------------- Generic class
+class Stack<T> {
+  private elements: T[] = [];
+
+  constructor(private size: number) {}
+  isEmpty(): boolean {
+    return this.elements.length === 0;
+  }
+  isFull(): boolean {
+    return this.elements.length === this.size;
+  }
+  push(element: T): void {
+    if (this.elements.length === this.size) {
+      throw new Error("The stack is overflow!");
+    }
+    this.elements.push(element);
+  }
+  pop(): T | undefined {
+    if (this.elements.length == 0) {
+      throw new Error("The stack is empty!");
+    }
+    console.log(this.elements.pop());
+    return this.elements.pop();
+  }
+}
+
+let stackNumbers = new Stack<number>(5);
+
+function randBetween(low: number, high: number): number {
+  return Math.floor(Math.random() * (high - low + 1) + low);
+}
+console.log(stackNumbers.isFull());
+
+while (!stackNumbers.isFull()) {
+  let n = randBetween(1, 10);
+  console.log(`Push ${n} into the stack.`);
+  stackNumbers.push(n);
+}
+console.log(stackNumbers.isFull());
+console.log(stackNumbers);
+
+while (!stackNumbers.isEmpty()) {
+  let n = stackNumbers.pop();
+  console.log(`Pop ${n} from the stack.`);
+}
+console.log(stackNumbers.isEmpty());
+console.log(stackNumbers);
+
 // --------------------------- few key points ----------------------------------
 
 // never type
-
 // theme mode
