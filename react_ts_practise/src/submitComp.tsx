@@ -1,10 +1,11 @@
 type propsType = {
-    type:string
-    onClick:()=>void
-}
+  clickHandler: () => void;
+};
 
-export default function(props:propsType){
-    return <div>
-        <input type={props.type} onClick={props.onClick}/>
+export default function (props: propsType) {
+  return (
+    <div>
+      <button onClick={props.clickHandler}>Calculate</button>
     </div>
+  );
 }
