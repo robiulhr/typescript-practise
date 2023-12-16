@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
+import NoteForm from "../component/noteForm";
 
 export default function Create() {
-  return <Box className="my-6">Create New Note</Box>;
+  return <NoteForm pageTitle={"Create New Note"} />;
 }

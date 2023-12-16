@@ -8,7 +8,7 @@ export default function FilterSection() {
         <SearchForm />
       </Paper>
       <Paper elevation={1}>
-        <TagFilter />
+        <TagFilter className="w-[370px]" />
       </Paper>
     </Box>
   );

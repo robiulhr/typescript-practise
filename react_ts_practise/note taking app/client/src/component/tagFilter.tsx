@@ -1,15 +1,20 @@
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function TagFilter() {
+interface TagFilterProps {
+  className?: string;
+}
+
+export default function TagFilter(props: TagFilterProps) {
   return (
     <Autocomplete
+      {...props}
       multiple
       id="checkboxes-tags-demo"
       options={top100Films}
@@ -21,7 +26,6 @@ export default function TagFilter() {
           {option.title}
         </li>
       )}
-      style={{ width: 370 }}
       renderInput={(params) => <TextField {...params} label="Tags" placeholder="Favorites" />}
     />
   );
