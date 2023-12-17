@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-export default function RichTextEditor() {
-  const [value, setValue] = useState("Write a description here...");
+interface RichTextEditorProps {
+  noteDescription: string;
+  onChange: (value: string, delta: any, source: any, editor: any) => void;
+}
 
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
-
-  return <ReactQuill theme="snow" style={{ height: "300px" }} value={value} onChange={setValue} />;
+export default function RichTextEditor({ noteDescription, onChange }: RichTextEditorProps) {
+  return <ReactQuill theme="snow" style={{ height: "300px" }} value={noteDescription} onChange={onChange} />;
 }

@@ -3,18 +3,25 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { ChangeEvent, SyntheticEvent } from "react";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 interface TagFilterProps {
   className?: string;
+  onChange?: (e: SyntheticEvent<Element, Event>) => void;
 }
 
 export default function TagFilter(props: TagFilterProps) {
+  const { className, onChange } = props;
+  console.log(props);
   return (
     <Autocomplete
-      {...props}
+      className={className}
+      onChange={onChange}
+      // {className && className={className}}
+      // {onChange && onChange={onChange}}
       multiple
       id="checkboxes-tags-demo"
       options={top100Films}
