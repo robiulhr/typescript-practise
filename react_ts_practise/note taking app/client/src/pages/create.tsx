@@ -3,7 +3,10 @@ import NoteForm from "../component/noteForm";
 
 export default function Create() {
   const [noteTitle, setNoteTitle] = useState("");
-  const [noteTags, setNoteTags] = useState([]);
+  /**
+   * here the <string[]> is used to make clear the dataype of children of this array.
+   */
+  const [noteTags, setNoteTags] = useState<string[]>([]);
   const [noteDescription, setNoteDescription] = useState("Write a description here...");
   const noteData = { noteTitle, noteTags, noteDescription };
   const noteHandlers = { setNoteTitle, setNoteTags, setNoteDescription };

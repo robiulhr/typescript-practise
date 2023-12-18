@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Paper, TextField, Typography } from "@mui/material";
 import RichTextEditor from "../component/richTextEditor";
 import TagFilter from "./tagFilter";
-import { ChangeEvent, SyntheticEvent, useEffect } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, SyntheticEvent, useEffect } from "react";
 
 interface NoteFormProps {
   pageTitle: string;
@@ -12,11 +12,16 @@ interface NoteFormProps {
     noteTags: string[];
   };
   noteHandlers: {
-    setNoteTitle: (input: string) => void;
-    setNoteTags: (input: string[]) => void;
-    setNoteDescription: (input: string) => void;
+    /*
+     * here Dispatch<SetStateAction<string>> is the type for react useState setter function argument and
+     * and the string and string[] defines the datatype of the argument.
+     */
+    setNoteTitle: Dispatch<SetStateAction<string>>;
+    setNoteTags: Dispatch<SetStateAction<string[]>>;
+    setNoteDescription: Dispatch<SetStateAction<string>>;
   };
 }
+
 export default function NoteForm({ noteData, noteHandlers, pageTitle, btnText }: NoteFormProps) {
   const { noteTitle, noteDescription, noteTags } = noteData;
   const { setNoteTitle, setNoteTags, setNoteDescription } = noteHandlers;
@@ -28,11 +33,12 @@ export default function NoteForm({ noteData, noteHandlers, pageTitle, btnText }:
   function noteTitleHandler(e: ChangeEvent<HTMLInputElement>) {
     setNoteTitle(e.target.value);
   }
-  function noteTagsHandler(e: SyntheticEvent<Element, Event>) {
-    console.log(e);
+  function noteTagsHandler(e: SyntheticEvent, value: string[]) {
+    console.log(e, value);
+    setNoteTags(value);
   }
-  function noteDescriptionHandler(e: ChangeEvent<HTMLInputElement>) {
-    console.log(e);
+  function noteDescriptionHandler(value: string, delta: any, source: any, editor: any) {
+    setNoteDescription(value);
   }
   return (
     <Paper className="my-6 p-10">
@@ -44,7 +50,7 @@ export default function NoteForm({ noteData, noteHandlers, pageTitle, btnText }:
       </Box>
       <Box className="my-4">
         <Typography className="text-start my-2">Tags</Typography>
-        <TagFilter onChange={noteTagsHandler} className="w-[100%]" />
+        <TagFilter noteTags={noteTags} onChange={noteTagsHandler} className="w-[100%]" />
       </Box>
       <Box className="my-10">
         <Typography className="text-start my-2">Description</Typography>
