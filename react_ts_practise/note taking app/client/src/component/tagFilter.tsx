@@ -12,10 +12,11 @@ interface TagFilterProps {
   className?: string;
   onChange?: (e: SyntheticEvent<Element, Event>, value: string[]) => void;
   noteTags: string[];
+  error: boolean;
 }
 
 export default function TagFilter(props: TagFilterProps) {
-  const { className, onChange, noteTags } = props;
+  const { className, onChange, noteTags, error } = props;
   console.log(props);
   return (
     <Autocomplete
@@ -35,7 +36,7 @@ export default function TagFilter(props: TagFilterProps) {
           {option}
         </li>
       )}
-      renderInput={(params) => <TextField {...params} label="Tags" placeholder="Favorites" />}
+      renderInput={(params) => <TextField error={error ? true : false} {...params} label="Tags" placeholder="Favorites" />}
     />
   );
 }

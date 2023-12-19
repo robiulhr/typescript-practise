@@ -7,7 +7,7 @@ export default function Create() {
    * here the <string[]> is used to make clear the dataype of children of this array.
    */
   const [noteTags, setNoteTags] = useState<string[]>([]);
-  const [noteDescription, setNoteDescription] = useState("Write a description here...");
+  const [noteDescription, setNoteDescription] = useState("");
   const noteData = { noteTitle, noteTags, noteDescription };
   const noteHandlers = { setNoteTitle, setNoteTags, setNoteDescription };
   useEffect(() => {
